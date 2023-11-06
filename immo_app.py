@@ -165,7 +165,7 @@ st.plotly_chart(fig3,use_container_width=True)
 
 # Filtrer les lignes avec des valeurs non nulles dans les colonnes pertinentes
 df_filtered = filtered_df.dropna(subset=["City", "Number Room", "type_logement", "jours reserves"])
-fig4 = px.treemap(df_filtered, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
+fig4 = px.treemap(df_filtered, path=["City", "Number Room", "type_logement"], values="jours reserves")
 fig4.update_layout(width=800, height=650)
 st.plotly_chart(fig4, use_container_width=True)
 
