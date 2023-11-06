@@ -8,6 +8,7 @@ import base64
 import warnings
 warnings.filterwarnings('ignore')
 
+
 pd.set_option('display.max_row',111)
 pd.set_option('display.max_column',111)
 
@@ -23,7 +24,6 @@ if fl is not None:
     filename = fl.name
     st.write(filename)
     df = pd.read_csv(filename) #, encoding = "ISO-8859-1")
-
 
 st.sidebar.header("Choose your filter: ")
 
@@ -62,7 +62,7 @@ else:
 with st.expander("Data"):
     #st.write(df5) #.style.background_gradient(cmap="Oranges")
     st.dataframe(df5.style.background_gradient(cmap="Oranges"))
-    
+
 
 
 # Filter the data based on Number of room, City and Typologie
@@ -139,7 +139,7 @@ rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count
 fig = px.pie(rooms, values='Title', names='Number Room')
 st.plotly_chart(fig,use_container_width=True)
 
-with st.expander("View_Data"):
+with st.expander("Nombre d'annonces par typologie"):
     rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
     st.write(rooms.style.background_gradient(cmap="Blues"))
     #st.write(rooms) #.style.background_gradient(cmap="Oranges"))
@@ -159,7 +159,11 @@ df.rename(columns={
 
 # Create a treemap based on Region, category, sub-Category
 st.subheader("Jours réservés")
-fig3 = px.treemap(df, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
+#fig3 = px.treemap(df, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
+reservation_rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Jours_Reserves'].count(
+fig3 = px.box(reservation_rooms, x="Number Room", y='Jours_Reserves', template = "seaborn")
+fig3.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
+st.plotly_chart(fig3,use_container_width=True)
 
-fig3.update_layout(width=800, height=650)
-st.plotly_chart(fig3, use_container_width=True)
+#fig3.update_layout(width=800, height=650)
+#st.plotly_chart(fig3, use_container_width=True)
