@@ -111,7 +111,6 @@ with col1:
 
     # Scatter plot des annonces par prix et par nombre de chambres
     fig = px.scatter(filtered_df, x="Number Room", y='euros', template = "seaborn") #,color="piscine")
-    #fig.update_layout(height=500,width =900, yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres", title = "Prix par nuit en fonction du nombre de chambre")
     fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres")
     st.plotly_chart(fig,use_container_width=True) #, height = 200)
 
@@ -149,19 +148,19 @@ with st.expander("Nombre d'annonces par typologie"):
     st.download_button("Download Data", data = csv, mime = "text/csv",
                     help = 'Click here to download the data as a CSV file') #, file_name = "Bien par chambre.csv"
 
-df.rename(columns={
-    "City": "City",
-    "Number Room": "Number_Room",
-    "type_logement": "Type_Logement",
-    "jours reserves": "Jours_Reserves"
-}, inplace=True)
+#df.rename(columns={
+#    "City": "City",
+#    "Number Room": "Number_Room",
+#    "type_logement": "Type_Logement",
+#    "jours reserves": "Jours_Reserves"
+#}, inplace=True)
 
 
 # Create a treemap based on Region, category, sub-Category
 st.subheader("Jours réservés")
 #fig3 = px.treemap(df, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
-reservation_rooms = filtered_df.groupby(by = "Number_Room", as_index = False)['Jours_Reserves'].count(
-fig3 = px.box(reservation_rooms, x="Number_Room", y='Jours_Reserves', template = "seaborn")
+reservation_rooms = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
+fig3 = px.box(reservation_rooms, x="Number Room", y='jours reserves', template = "seaborn")
 fig3.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
 st.plotly_chart(fig3,use_container_width=True)
 
