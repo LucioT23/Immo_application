@@ -166,3 +166,7 @@ st.plotly_chart(fig3,use_container_width=True)
 
 #fig3.update_layout(width=800, height=650)
 #st.plotly_chart(fig3, use_container_width=True)
+
+with st.expander("Nombre de réservations par typologie"):
+    st.write(reservation_rooms.style.background_gradient(cmap="Blues"))
+    
