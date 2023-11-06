@@ -162,7 +162,7 @@ st.subheader("Jours réservés")
 #fig3 = px.treemap(df, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
 reservation_rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Jours_Reserves'].count(
 fig3 = px.box(reservation_rooms, x="Number Room", y='Jours_Reserves', template = "seaborn")
-fig3.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
+#fig3.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
 st.plotly_chart(fig3,use_container_width=True)
 
 #fig3.update_layout(width=800, height=650)
