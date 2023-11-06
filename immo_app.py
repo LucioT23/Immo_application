@@ -8,7 +8,6 @@ import base64
 import warnings
 warnings.filterwarnings('ignore')
 
-
 pd.set_option('display.max_row',111)
 pd.set_option('display.max_column',111)
 
@@ -19,24 +18,12 @@ st.title(' :house: Immo Data Analyze')
 # Pour remonter le titre dans la page
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
-#fl = st.file_uploader(" :file_folder: Upload a file",type=(["csv","txt","xlsx","xls"]))
-#if fl is not None:
-#    filename = fl.name
-#    st.write(filename)
-#    df = pd.read_csv(filename) #, encoding = "ISO-8859-1")
+fl = st.file_uploader(" :file_folder: Upload a file",type=(["csv","txt","xlsx","xls"]))
+if fl is not None:
+    filename = fl.name
+    st.write(filename)
+    df = pd.read_csv(filename) #, encoding = "ISO-8859-1")
 
-
-from google.colab import drive
-drive.mount('/content/gdrive')
-
-from google.colab import auth
-auth.authenticate_user()
-
-# Spécifiez le chemin du fichier Excel
-file_path = '/content/gdrive/My Drive/data_airbnb_Juillet_2023_clean.csv'
-
-# Lisez le fichier Excel dans un DataFrame Pandas
-df = pd.read_csv(file_path)
 
 st.sidebar.header("Choose your filter: ")
 
@@ -75,7 +62,7 @@ else:
 with st.expander("Data"):
     #st.write(df5) #.style.background_gradient(cmap="Oranges")
     st.dataframe(df5.style.background_gradient(cmap="Oranges"))
-
+    
 
 
 # Filter the data based on Number of room, City and Typologie
