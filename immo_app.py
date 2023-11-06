@@ -158,14 +158,16 @@ with st.expander("Nombre d'annonces par typologie"):
 
 # Create a treemap based on Region, category, sub-Category
 st.subheader("Jours réservés")
-#fig3 = px.treemap(df, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
 reservation_rooms = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
 fig3 = px.box(reservation_rooms, x="Number Room", y='jours reserves', template = "seaborn")
 fig3.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
 st.plotly_chart(fig3,use_container_width=True)
 
-#fig3.update_layout(width=800, height=650)
-#st.plotly_chart(fig3, use_container_width=True)
+# Filtrer les lignes avec des valeurs non nulles dans les colonnes pertinentes
+df_filtered = filtered_df.dropna(subset=["City", "Number Room", "type_logement", "jours reserves"])
+fig4 = px.treemap(df_filtered, path=["City", "Number_Room", "Type_Logement"], values="Jours_Reserves")
+fig4.update_layout(width=800, height=650)
+st.plotly_chart(fig4, use_container_width=True)
 
 with st.expander("Nombre de réservations par typologie"):
     st.write(reservation_rooms.style.background_gradient(cmap="Blues"))
