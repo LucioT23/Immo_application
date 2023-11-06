@@ -29,6 +29,9 @@ st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow
 from google.colab import drive
 drive.mount('/content/gdrive')
 
+from google.colab import auth
+auth.authenticate_user()
+
 # Spécifiez le chemin du fichier Excel
 file_path = '/content/gdrive/My Drive/data_airbnb_Juillet_2023_clean.csv'
 
