@@ -133,10 +133,18 @@ fig = px.scatter_mapbox(filtered_df, lat="latitude", lon="longitude", color="eur
                        size_max=15, zoom=11,mapbox_style="carto-positron")
 st.plotly_chart(fig,use_container_width=True, height = 500, width = 1000)
 
-st.subheader("Repartition des biens")
-rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
-fig = px.pie(rooms, values='Title', names='Number Room')
-st.plotly_chart(fig,use_container_width=True)
+col1_repartition, col2_repartition = st.columns((2))
+with col1_repartition:
+  st.subheader("Repartition des biens en %")
+  rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
+  fig = px.pie(rooms, values='Title', names='Number Room')
+  st.plotly_chart(fig,use_container_width=True)
+
+with col2_repartition:
+  st.subheader("Repartition des biens en volume")
+  rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
+  fig = px.bar(rooms, values='Title', names='Number Room')
+  st.plotly_chart(fig,use_container_width=True)
 
 with st.expander("Nombre d'annonces par typologie"):
     rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
@@ -171,4 +179,3 @@ st.plotly_chart(fig4, use_container_width=True)
 
 with st.expander("Nombre de réservations par typologie"):
     st.write(reservation_rooms.style.background_gradient(cmap="Blues"))
-    
