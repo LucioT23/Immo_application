@@ -141,9 +141,9 @@ with col1_repartition:
   st.plotly_chart(fig,use_container_width=True)
 
 with col2_repartition:
-  st.subheader("Repartition des biens en volume")
+  st.subheader("Repartition des biens en Volume")
   rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
-  fig = px.bar(rooms, values='Title', names='Number Room')
+  fig = px.bar(rooms, x="Number Room", y='Title')
   st.plotly_chart(fig,use_container_width=True)
 
 with st.expander("Nombre d'annonces par typologie"):
