@@ -178,7 +178,7 @@ result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Tot
 
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
 with col1_reservation:
-  st.subheader("Nombre des biens réservés sur cette période")
+  #st.subheader("Nombre des biens réservés sur cette période")
   #reservation_rooms_count = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
   #reservation_rooms_count = reservation_rooms_count.rename(columns={'jours reserves': 'logements reservés'})
   fig3 = px.bar(result_by_room, x="Number Room", y='Nombre reservation', template = "seaborn")
@@ -186,16 +186,16 @@ with col1_reservation:
   st.plotly_chart(fig3,use_container_width=True)
 
 with col2_reservation:
-  st.subheader("Nombre des jours réservés sur cette période")
+  #st.subheader("Nombre des jours réservés sur cette période")
   #fig = px.bar(reservation_rooms, x="Number Room", y='Total jours réservés', template = "seaborn")
   fig = px.bar(result_by_room, x="Number Room", y='Total jours réservés', template = "seaborn")
-  fig.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
+  fig.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres", title="Nombre des jours réservés sur cette période")
   st.plotly_chart(fig,use_container_width=True)
 
 with col3_reservation:
-  st.subheader("Moyenne de jours réservés par reservation")
+  #st.subheader("Moyenne de jours réservés par reservation")
   fig = px.bar(result_by_room, x="Number Room", y='Moyenne jours réservés par reservation')
-  fig.update_layout(yaxis_title="Moyenne de jours réservés", xaxis_title = "Nombre de chambres")
+  fig.update_layout(yaxis_title="Moyenne de jours réservés", xaxis_title = "Nombre de chambres", title="Moyenne de jours réservés par reservation")
   st.plotly_chart(fig,use_container_width=True)
 
 # Filtrer les lignes avec des valeurs non nulles dans les colonnes pertinentes
