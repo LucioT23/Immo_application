@@ -169,7 +169,7 @@ with st.expander("Nombre d'annonces par typologie"):
 st.subheader("Jours réservés")
 st.write(f"La période de réservation est : {filtered_df['periode reservation'].iloc[0]}")
 #reservation_rooms = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
-reservation_rooms = df_test.groupby(by = ["Number Room", 'Number annonce'], as_index = False)['jours reserves'].agg({'Nombre reservation': 'count', 'Total jours réservés': 'sum'})
+reservation_rooms = filtered_df.groupby(by = ["Number Room", 'Number annonce'], as_index = False)['jours reserves'].agg({'Nombre reservation': 'count', 'Total jours réservés': 'sum'})
 # Modifie la colonne 'Nombre reservation' en fonction de la valeur de 'Total jours réservés'
 reservation_rooms['Nombre reservation'] = reservation_rooms.apply(lambda row: 0 if row['Total jours réservés'] == 0 else row['Nombre reservation'], axis=1)
 fig3 = px.bar(reservation_rooms, x="Number Room", y='Nombre reservation', template = "seaborn")
