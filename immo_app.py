@@ -133,7 +133,7 @@ fig = px.scatter_mapbox(filtered_df, lat="latitude", lon="longitude", color="eur
                        size_max=15, zoom=11,mapbox_style="carto-positron")
 st.plotly_chart(fig,use_container_width=True, height = 500, width = 1000)
 
-col1_repartition, col2_repartition = st.columns((2))
+col1_repartition, col2_repartition, col3_repartition = st.columns((3))
 with col1_repartition:
   st.subheader("Repartition des biens en %")
   rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
@@ -146,6 +146,14 @@ with col2_repartition:
   fig = px.bar(rooms, x="Number Room", y='Title')
   fig.update_layout(yaxis_title="Nb de logements", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig,use_container_width=True)
+
+with col3_repartition:
+  st.subheader("Repartition des biens par typologie")
+  rooms_typo = df_test.groupby(by = ["Number Room",'type_logement'], as_index = False)['Title'].count()
+  fig = px.bar(rooms_typo, x="Number Room", y="Title", color="type_logement")
+  fig.update_layout(yaxis_title="Nb de logements par typologie", xaxis_title = "Nombre de chambres")
+  st.plotly_chart(fig,use_container_width=True)
+  
 
 with st.expander("Nombre d'annonces par typologie"):
     rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
