@@ -168,13 +168,24 @@ with st.expander("Nombre d'annonces par typologie"):
 # Create a treemap based on Region, category, sub-Category
 st.subheader("Jours réservés")
 st.write(f"La période de réservation est : {filtered_df['periode reservation'].iloc[0]}")
-#reservation_rooms = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
+
 reservation_rooms = filtered_df.groupby(by = ["Number Room", 'Number annonce'], as_index = False)['jours reserves'].agg({'Nombre reservation': 'count', 'Total jours réservés': 'sum'})
 # Modifie la colonne 'Nombre reservation' en fonction de la valeur de 'Total jours réservés'
 reservation_rooms['Nombre reservation'] = reservation_rooms.apply(lambda row: 0 if row['Total jours réservés'] == 0 else row['Nombre reservation'], axis=1)
-fig3 = px.bar(reservation_rooms, x="Number Room", y='Nombre reservation', template = "seaborn")
-fig3.update_layout(yaxis_title="Nombre de biens réservés", xaxis_title = "Nombre de chambres")
-st.plotly_chart(fig3,use_container_width=True)
+
+col1_reservation, col2_reservation = st.columns((2))
+with col1_reservation:
+  st.subheader("Nombre des biens réservés sur cette période")
+  fig3 = px.bar(reservation_rooms, x="Number Room", y='Nombre reservation', template = "seaborn")
+  fig3.update_layout(yaxis_title="Nombre de biens réservés", xaxis_title = "Nombre de chambres")
+  st.plotly_chart(fig3,use_container_width=True)
+
+with col2_reservation:
+  st.subheader("Nombre des biens réservés sur cette période")
+  fig = px.bar(reservation_rooms, x="Number Room", y='Total jours réservés', template = "seaborn")
+  fig.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres")
+  st.plotly_chart(fig,use_container_width=True)
+
 
 # Filtrer les lignes avec des valeurs non nulles dans les colonnes pertinentes
 df_filtered = filtered_df.dropna(subset=["City", "Number Room", "type_logement", "jours reserves"])
