@@ -149,7 +149,7 @@ with col2_repartition:
 
 with col3_repartition:
   st.subheader("Repartition des biens par typologie")
-  rooms_typo = df_test.groupby(by = ["Number Room",'type_logement'], as_index = False)['Title'].count()
+  rooms_typo = filtered_df.groupby(by = ["Number Room",'type_logement'], as_index = False)['Title'].count()
   fig = px.bar(rooms_typo, x="Number Room", y="Title", color="type_logement")
   fig.update_layout(yaxis_title="Nb de logements par typologie", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig,use_container_width=True)
