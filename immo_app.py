@@ -178,7 +178,7 @@ result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Tot
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
 with col1_reservation:
   st.subheader("Nombre des biens réservés sur cette période")
-  reservation_rooms_count = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves']
+  reservation_rooms_count = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
   fig3 = px.bar(reservation_rooms_count, x="Number Room", y='jours reserves', template = "seaborn")
   fig3.update_layout(yaxis_title="Nombre de biens réservés", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig3,use_container_width=True)
