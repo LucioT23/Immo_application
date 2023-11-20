@@ -172,6 +172,8 @@ st.write(f"La période de réservation est : {filtered_df['periode reservation']
 reservation_rooms = filtered_df.groupby(by = ["Number Room", 'Number annonce'], as_index = False)['jours reserves'].agg({'Nombre reservation': 'count', 'Total jours réservés': 'sum'})
 # Modifie la colonne 'Nombre reservation' en fonction de la valeur de 'Total jours réservés'
 reservation_rooms['Nombre reservation'] = reservation_rooms.apply(lambda row: 0 if row['Total jours réservés'] == 0 else row['Nombre reservation'], axis=1)
+result_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'Nombre reservation': 'sum','Total jours réservés': 'sum'})
+result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Total jours réservés'] / result_by_room['Nombre reservation']
 
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
 with col1_reservation:
@@ -189,9 +191,7 @@ with col2_reservation:
 
 with col3_reservation:
   st.subheader("Moyenne de nuits réservés par typologie")
-  result_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'Nombre reservation': 'sum','Total jours réservés': 'sum'})
-  result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Total jours réservés'] / result_by_room['Nombre reservation']
-  fig = px.bar(result_by_room, x="Number Room", y='Moyenne jours réservés par reservation', template = "seaborn")
+  fig = px.bar(result_by_room, x="Number Room", y='Moyenne jours réservés par reservation')
   fig.update_layout(yaxis_title="Moyenne de jours réservés", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig,use_container_width=True)
 
