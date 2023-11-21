@@ -135,16 +135,18 @@ fig = px.scatter_mapbox(filtered_df, lat="latitude", lon="longitude", color="eur
                        size_max=15, zoom=11,mapbox_style="carto-positron")
 st.plotly_chart(fig,use_container_width=True, height = 500, width = 1000)
 
+rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
+
 col1_repartition, col2_repartition, col3_repartition = st.columns((3))
 with col1_repartition:
   #st.subheader("Repartition des biens en %")
-  rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
+  #rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
   fig = px.pie(rooms, values='Title', names='Number Room', title = "Repartition des biens en %")
   st.plotly_chart(fig,use_container_width=True)
 
 with col2_repartition:
   #st.subheader("Repartition des biens en Volume")
-  rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
+  #rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
   fig = px.bar(rooms, x="Number Room", y='Title', title = "Repartition des biens en Volume")
   fig.update_layout(yaxis_title="Nb de logements", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig,use_container_width=True)
@@ -158,7 +160,6 @@ with col3_repartition:
 
 
 with st.expander("Nombre d'annonces par typologie"):
-    rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
     st.write(rooms.style.background_gradient(cmap="Blues"))
     #st.write(rooms) #.style.background_gradient(cmap="Oranges"))
     #csv = region.to_csv(index = False)   #.encode('utf-8')
@@ -189,16 +190,18 @@ occupancy_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg
 result_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'Nombre reservation': 'sum','Total jours réservés': 'sum'})
 result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Total jours réservés'] / result_by_room['Nombre reservation']
 
+# Fusionner les DataFrames 'rooms' et 'occupancy_by_room' sur la colonne 'Number Room'
+merged_df = pd.merge(rooms, occupancy_by_room, on='Number Room')
+# Calculer le revenu potentiel en multipliant le nombre moyen de jours réservés par le prix moyen par nuit
+merged_df['revenue_potential'] = merged_df['occupancy_rate'] * merged_df['euros']
+
 col1_kpi, col2_kpi = st.columns((2))
 with col1_kpi:
   fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate') #, template = "seaborn"
   fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation", color='orange')
   st.plotly_chart(fig,use_container_width=True)
 with col2_kpi:
-  # Fusionner les DataFrames 'rooms' et 'occupancy_by_room' sur la colonne 'Number Room'
-  merged_df = pd.merge(rooms, occupancy_by_room, on='Number Room')
-  # Calculer le revenu potentiel en multipliant le nombre moyen de jours réservés par le prix moyen par nuit
-  merged_df['revenue_potential'] = merged_df['occupancy_rate'] * merged_df['euros']
+
   fig = px.bar(merged_df, x="Number Room", y='revenue_potential') #, template = "seaborn"
   fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel", color='orange')
   st.plotly_chart(fig,use_container_width=True)
