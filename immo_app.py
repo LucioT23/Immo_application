@@ -105,25 +105,25 @@ else:
 
 col1, col2, col3 = st.columns((3))
 with col1:
-    st.subheader("Prix par nuit en fonction du nb de chambre")
+    #st.subheader("Prix par nuit")
     #fig = px.bar(category_df, x = "Category", y = "Sales", text = ['${:,.2f}'.format(x) for x in category_df["Sales"]],
     #             template = "seaborn")
 
     # Scatter plot des annonces par prix et par nombre de chambres
-    fig = px.scatter(filtered_df, x="Number Room", y='euros', template = "seaborn") #,color="piscine")
+    fig = px.scatter(filtered_df, x="Number Room", y='euros', template = "seaborn", title = "Prix par nuit") #,color="piscine")
     fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres")
     st.plotly_chart(fig,use_container_width=True) #, height = 200)
 
 with col2:
-    st.subheader("Prix médian par nuit")
+    #st.subheader("Prix médian par nuit")
     fig = px.box(filtered_df, x="Number Room", y='euros', template = "seaborn") #template="gridon"
-    fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres")
+    fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres", title = "Prix médian par nuit")
     st.plotly_chart(fig,use_container_width=True)
 
 with col3:
-    st.subheader("Prix moyen par nuit")
+    #st.subheader("Prix moyen par nuit")
     rooms = filtered_df.groupby(by = "Number Room", as_index = False)['euros'].mean()
-    fig = px.box(rooms, x="Number Room", y='euros', template = "seaborn") #template = "plotly_dark"
+    fig = px.bar(rooms, x="Number Room", y='euros', template = "seaborn", title = "Prix moyen par nuit") #template = "plotly_dark"
     fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres")
     st.plotly_chart(fig,use_container_width=True)
 
@@ -135,25 +135,25 @@ st.plotly_chart(fig,use_container_width=True, height = 500, width = 1000)
 
 col1_repartition, col2_repartition, col3_repartition = st.columns((3))
 with col1_repartition:
-  st.subheader("Repartition des biens en %")
+  #st.subheader("Repartition des biens en %")
   rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
-  fig = px.pie(rooms, values='Title', names='Number Room')
+  fig = px.pie(rooms, values='Title', names='Number Room', title = "Repartition des biens en %")
   st.plotly_chart(fig,use_container_width=True)
 
 with col2_repartition:
-  st.subheader("Repartition des biens en Volume")
+  #st.subheader("Repartition des biens en Volume")
   rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
-  fig = px.bar(rooms, x="Number Room", y='Title')
+  fig = px.bar(rooms, x="Number Room", y='Title', title = "Repartition des biens en Volume")
   fig.update_layout(yaxis_title="Nb de logements", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig,use_container_width=True)
 
 with col3_repartition:
-  st.subheader("Repartition des biens par typologie")
+  #st.subheader("Repartition des biens par typologie")
   rooms_typo = filtered_df.groupby(by = ["Number Room",'type_logement'], as_index = False)['Title'].count()
-  fig = px.bar(rooms_typo, x="Number Room", y="Title", color="type_logement")
+  fig = px.bar(rooms_typo, x="Number Room", y="Title", color="type_logement", title="Repartition des biens par typologie")
   fig.update_layout(yaxis_title="Nb de logements par typologie", xaxis_title = "Nombre de chambres")
   st.plotly_chart(fig,use_container_width=True)
-  
+
 
 with st.expander("Nombre d'annonces par typologie"):
     rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
