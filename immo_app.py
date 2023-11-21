@@ -190,7 +190,7 @@ occupancy_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg
 result_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'Nombre reservation': 'sum','Total jours réservés': 'sum'})
 result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Total jours réservés'] / result_by_room['Nombre reservation']
 
-rooms_mean_price = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].mean()
+rooms_mean_price = filtered_df.groupby(by = "Number Room", as_index = False)['euros'].mean()
 # Fusionner les DataFrames 'rooms' et 'occupancy_by_room' sur la colonne 'Number Room'
 merged_df = pd.merge(rooms_mean_price, occupancy_by_room, on='Number Room')
 # Calculer le revenu potentiel en multipliant le nombre moyen de jours réservés par le prix moyen par nuit
