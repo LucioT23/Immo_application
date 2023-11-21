@@ -190,7 +190,7 @@ result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Tot
 
 
 fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate') #, template = "seaborn"
-fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation", marker_color='crimson')
+fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation")#, marker_color='crimson')
 st.plotly_chart(fig,use_container_width=True)
 
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
