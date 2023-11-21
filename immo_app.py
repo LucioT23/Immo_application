@@ -103,6 +103,7 @@ elif selected_equipement:
 else:
     filtered_df = df5[df5["Number Room"].isin(nb_rooms) & df5["City"].isin(city) & df5["type_logement"].isin(typologie) & (df5['Test_Equipment'].apply(lambda x: all(equip in x for equip in selected_equipement)))]
 
+st.subheader("Prix par nuit")
 col1, col2, col3 = st.columns((3))
 with col1:
     #st.subheader("Prix par nuit")
@@ -166,15 +167,31 @@ with st.expander("Nombre d'annonces par typologie"):
                     help = 'Click here to download the data as a CSV file') #, file_name = "Bien par chambre.csv"
 
 # Create a treemap based on Region, category, sub-Category
-st.subheader("Jours réservés")
+st.subheader("Réservation")
 st.write(f"La période de réservation est : {filtered_df['periode reservation'].iloc[0]}")
+
+# Calcul du nombre de jours total sur la période de données
+periode_string = filtered_df['periode reservation'].iloc[0]
+# Séparer la chaîne en date de début et date de fin
+date_debut_str, date_fin_str = periode_string.split(' - ')
+# Convertir les chaînes en objets datetime
+date_debut = pd.to_datetime(date_debut_str, format='%d/%m/%Y')
+date_fin = pd.to_datetime(date_fin_str, format='%d/%m/%Y')
+# Calculer la différence entre les dates
+nombre_de_jours = (date_fin - date_debut).days + 1
 
 reservation_rooms = filtered_df.groupby(by = ["Number Room", 'Number annonce'], as_index = False)['jours reserves'].agg({'Nombre reservation': 'count', 'Total jours réservés': 'sum'})
 # Modifie la colonne 'Nombre reservation' en fonction de la valeur de 'Total jours réservés'
 reservation_rooms['Nombre reservation'] = reservation_rooms.apply(lambda row: 0 if row['Total jours réservés'] == 0 else row['Nombre reservation'], axis=1)
+reservation_rooms['occupancy_rate'] = (reservation_rooms['Total jours réservés']/nombre_de_jours)*100
+occupancy_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'occupancy_rate': 'mean'})
 result_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'Nombre reservation': 'sum','Total jours réservés': 'sum'})
 result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Total jours réservés'] / result_by_room['Nombre reservation']
 
+
+fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate') #, template = "seaborn"
+fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation", marker_color='crimson')
+st.plotly_chart(fig,use_container_width=True)
 
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
 with col1_reservation:
