@@ -185,8 +185,8 @@ nombre_de_jours = (date_fin - date_debut).days + 1
 reservation_rooms = filtered_df.groupby(by = ["Number Room", 'Number annonce'], as_index = False)['jours reserves'].agg({'Nombre reservation': 'count', 'Total jours réservés': 'sum'})
  # Modifie la colonne 'Nombre reservation' en fonction de la valeur de 'Total jours réservés'
 reservation_rooms['Nombre reservation'] = reservation_rooms.apply(lambda row: 0 if row['Total jours réservés'] == 0 else row['Nombre reservation'], axis=1)
-reservation_rooms['occupancy_rate'] = reservation_rooms['Total jours réservés']/nombre_de_jours)*100
-occupancy_by_room = reservation_rooms.groupby('Number Room', as_index=False).['occupancy_rate'].mean()
+reservation_rooms['occupancy_rate'] = (reservation_rooms['Total jours réservés']/nombre_de_jours)*100
+occupancy_by_room = reservation_rooms.groupby('Number Room', as_index=False)['occupancy_rate'].mean()
 result_by_room = reservation_rooms.groupby('Number Room', as_index=False).agg({'Nombre reservation': 'sum','Total jours réservés': 'sum'})
 result_by_room['Moyenne jours réservés par reservation'] = result_by_room['Total jours réservés'] / result_by_room['Nombre reservation']
 
@@ -197,6 +197,7 @@ merged_df = pd.merge(rooms_mean_price, occupancy_by_room, on='Number Room')
 merged_df['revenue_potential'] = merged_df['occupancy_rate'] * merged_df['euros']
 
 st.write(merged_df)
+st.write(reservation_rooms)
 st.write(occupancy_by_room)
 
 col1_kpi, col2_kpi = st.columns((2))
