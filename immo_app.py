@@ -194,18 +194,16 @@ rooms_mean_price = filtered_df.groupby(by = "Number Room", as_index = False)['eu
 # Fusionner les DataFrames 'rooms' et 'occupancy_by_room' sur la colonne 'Number Room'
 merged_df = pd.merge(rooms_mean_price, occupancy_by_room, on='Number Room')
 # Calculer le revenu potentiel en multipliant le nombre moyen de jours réservés par le prix moyen par nuit
-merged_df['revenue_potential'] = (merged_df['occupancy_rate'] * nombre_de_jours) * merged_df['euros']
-
-st.write(merged_df)
+merged_df['revenue_potential'] = (merged_df['occupancy_rate']/100 * nombre_de_jours) * merged_df['euros']
 
 col1_kpi, col2_kpi = st.columns((2))
 with col1_kpi:
   fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate') #, template = "seaborn"
-  #fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation", marker_color = 'orange')
+  fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation", marker_color = 'orange')
   st.plotly_chart(fig,use_container_width=True)
 with col2_kpi:
   fig = px.bar(merged_df, x="Number Room", y='revenue_potential')
-  #fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel", marker_color = 'orange')
+  fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel", marker_color = 'orange')
   st.plotly_chart(fig,use_container_width=True)
 
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
