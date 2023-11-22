@@ -7,15 +7,18 @@ import plotly.express as px
 import base64
 import warnings
 warnings.filterwarnings('ignore')
-
+from PIL import Image
 
 pd.set_option('display.max_row',111)
 pd.set_option('display.max_column',111)
 
 # pour nommer la page
-st.set_page_config(page_title="SuperImmo!!!", page_icon=":house:",layout="wide")
+st.set_page_config(page_title="Spotivest !!!", page_icon=":house:",layout="wide")
 
-st.title(' :house: Immo Data Analyze')
+image = Image.open('Logo_spotivest.png')
+st.image(image)
+
+st.title(' :house: Spotivest')
 # Pour remonter le titre dans la page
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
@@ -125,7 +128,7 @@ with col3:
     #st.subheader("Prix moyen par nuit")
     rooms = filtered_df.groupby(by = "Number Room", as_index = False)['euros'].mean()
     rooms['euros'] = rooms['euros'].round().astype(int)
-    fig = px.bar(rooms, x="Number Room", y='euros', template = "seaborn", title = "Prix moyen par nuit", text=rooms['euros']) #template = "plotly_dark"
+    fig = px.bar(rooms, x="Number Room", y='euros', template = "seaborn", title = "Prix moyen par nuit", text=rooms['euros'].map('{:.0f} €'.format)) #template = "plotly_dark"
     fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres")
     fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
     st.plotly_chart(fig,use_container_width=True)
@@ -206,7 +209,7 @@ with col1_kpi:
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 with col2_kpi:
-  fig = px.bar(merged_df, x="Number Room", y='revenue_potential', text=merged_df['revenue_potential'].map('{:.0f}€'.format))
+  fig = px.bar(merged_df, x="Number Room", y='revenue_potential', text=merged_df['revenue_potential'].map('{:.0f} €'.format))
   fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel")
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
