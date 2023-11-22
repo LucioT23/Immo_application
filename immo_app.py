@@ -200,11 +200,11 @@ merged_df['revenue_potential'] = (merged_df['occupancy_rate'] * nombre_de_jours)
 col1_kpi, col2_kpi = st.columns((2))
 with col1_kpi:
   fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate') #, template = "seaborn"
-  fig.update_layout(yaxis_title="Taux d occupation", xaxis_title = "Nombre de chambres", title="Taux d occupation", color='orange')
+  #fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation", color='orange')
   st.plotly_chart(fig,use_container_width=True)
 with col2_kpi:
   fig = px.bar(merged_df, x="Number Room", y='revenue_potential')
-  fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel", color='orange')
+  #fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel", color='orange')
   st.plotly_chart(fig,use_container_width=True)
 
 col1_reservation, col2_reservation, col3_reservation = st.columns((3))
