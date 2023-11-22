@@ -147,15 +147,17 @@ with col1_repartition:
 with col2_repartition:
   #st.subheader("Repartition des biens en Volume")
   #rooms = filtered_df.groupby(by = "Number Room", as_index = False)['Title'].count()
-  fig = px.bar(rooms, x="Number Room", y='Title', title = "Repartition des biens en Volume")
+  fig = px.bar(rooms, x="Number Room", y='Title', title = "Repartition des biens en Volume", text =rooms['Title'] )
   fig.update_layout(yaxis_title="Nb de logements", xaxis_title = "Nombre de chambres")
+  fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 
 with col3_repartition:
   #st.subheader("Repartition des biens par typologie")
   rooms_typo = filtered_df.groupby(by = ["Number Room",'type_logement'], as_index = False)['Title'].count()
-  fig = px.bar(rooms_typo, x="Number Room", y="Title", color="type_logement", title="Repartition des biens par typologie")
+  fig = px.bar(rooms_typo, x="Number Room", y="Title", color="type_logement", title="Repartition des biens par typologie",, text =rooms_typo['Title'])
   fig.update_layout(yaxis_title="Nb de logements par typologie", xaxis_title = "Nombre de chambres")
+  fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 
 
@@ -200,10 +202,10 @@ col1_kpi, col2_kpi = st.columns((2))
 with col1_kpi:
   fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate',text=occupancy_by_room['occupancy_rate'].map('{:.0f}%'.format)) #, template = "seaborn"
   fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation")      
-  fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white",)
+  fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 with col2_kpi:
-  fig = px.bar(merged_df, x="Number Room", y='revenue_potential', text_auto = '.0s')
+  fig = px.bar(merged_df, x="Number Room", y='revenue_potential', text_auto = '.2')
   fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel")
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white",)
   st.plotly_chart(fig,use_container_width=True)
