@@ -206,7 +206,7 @@ with col1_kpi:
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 with col2_kpi:
-  fig = px.bar(merged_df, x="Number Room", y='revenue_potential', text=merged_df['revenue_potential'].map('{:.0}'.format))
+  fig = px.bar(merged_df, x="Number Room", y='revenue_potential', text=merged_df['revenue_potential'].map('{:,.0f}'.format))
   fig.update_layout(yaxis_title="Revenu en €", xaxis_title = "Nombre de chambres", title="Revenue Previsionnel")
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
