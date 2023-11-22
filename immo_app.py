@@ -217,7 +217,7 @@ with col1_reservation:
   #st.subheader("Nombre des biens réservés sur cette période")
   #reservation_rooms_count = filtered_df.groupby(by = "Number Room", as_index = False)['jours reserves'].count()
   #reservation_rooms_count = reservation_rooms_count.rename(columns={'jours reserves': 'logements reservés'})
-  fig3 = px.bar(result_by_room, x="Number Room", y='Nombre reservation', template = "seaborn",, text=result_by_room['Nombre reservation'])
+  fig3 = px.bar(result_by_room, x="Number Room", y='Nombre reservation', template = "seaborn", text=result_by_room['Nombre reservation'])
   fig3.update_layout(yaxis_title="Nombre de biens réservés", xaxis_title = "Nombre de chambres", title="Nombre des biens réservés sur cette période")
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig3,use_container_width=True)
