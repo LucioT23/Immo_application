@@ -198,7 +198,7 @@ merged_df['revenue_potential'] = (merged_df['occupancy_rate']/100 * nombre_de_jo
 
 col1_kpi, col2_kpi = st.columns((2))
 with col1_kpi:
-  fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate',text_auto='.2s') #, template = "seaborn"
+  fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate',text_auto='.2%') #, template = "seaborn"
   fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation")      
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=16, textfont_color="white",)
   st.plotly_chart(fig,use_container_width=True)
