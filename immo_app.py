@@ -201,7 +201,7 @@ merged_df['revenue_potential'] = (merged_df['occupancy_rate']/100 * nombre_de_jo
 
 col1_kpi, col2_kpi = st.columns((2))
 with col1_kpi:
-  fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate',text=occupancy_by_room['occupancy_rate'].map('{:.0f}%'.format)) #, template = "seaborn"
+  fig = px.bar(occupancy_by_room, x="Number Room", y='occupancy_rate',text=occupancy_by_room['occupancy_rate'].map('{:.0f}'.format)) #, template = "seaborn"
   fig.update_layout(yaxis_title="Taux d'occupation", xaxis_title = "Nombre de chambres", title="Taux d'occupation")      
   fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
@@ -231,7 +231,7 @@ with col2_reservation:
 
 with col3_reservation:
   #st.subheader("Moyenne de jours réservés par reservation")
-  fig = px.bar(result_by_room, x="Number Room", y='Moyenne jours réservés par reservation', text=result_by_room['Moyenne jours réservés par reservation'])
+  fig = px.bar(result_by_room, x="Number Room", y='Moyenne jours réservés par reservation', text=result_by_room['Moyenne jours réservés par reservation'].map('{:.1f}'.format))
   fig.update_layout(yaxis_title="Moyenne de jours réservés", xaxis_title = "Nombre de chambres", title="Moyenne de jours réservés par reservation")
   fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
