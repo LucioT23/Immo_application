@@ -16,7 +16,20 @@ pd.set_option('display.max_column',111)
 st.set_page_config(page_title="Spotivest !!!", page_icon=":house:",layout="wide")
 
 image = Image.open('Logo_spotivest.png')
-st.image(image)
+#st.image(image)
+st.markdown(
+        f"""
+            <style>
+                [data-testid="stSidebar"] {{
+                    background-image: image;
+                    background-repeat: no-repeat;
+                    padding-top: 80px;
+                    background-position: 20px 20px;
+                }}
+            </style>
+            """,
+        unsafe_allow_html=True,
+    )
 
 st.title(' :house: Spotivest')
 # Pour remonter le titre dans la page
