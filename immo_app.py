@@ -117,9 +117,8 @@ with col1:
 
 with col2:
     #st.subheader("Prix médian par nuit")
-    fig = px.box(filtered_df, x="Number Room", y='euros', template = "seaborn", text=filtered_df['euros']) #template="gridon"
+    fig = px.box(filtered_df, x="Number Room", y='euros', template = "seaborn") #template="gridon"
     fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres", title = "Prix médian par nuit")
-    fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
     st.plotly_chart(fig,use_container_width=True)
 
 with col3:
@@ -128,7 +127,7 @@ with col3:
     rooms['euros'] = rooms['euros'].round().astype(int)
     fig = px.bar(rooms, x="Number Room", y='euros', template = "seaborn", title = "Prix moyen par nuit", text=rooms['euros']) #template = "plotly_dark"
     fig.update_layout(yaxis_title="Prix € par nuit", xaxis_title = "Nombre de chambres")
-    fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
+    fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
     st.plotly_chart(fig,use_container_width=True)
 
 
@@ -219,7 +218,7 @@ with col1_reservation:
   #reservation_rooms_count = reservation_rooms_count.rename(columns={'jours reserves': 'logements reservés'})
   fig3 = px.bar(result_by_room, x="Number Room", y='Nombre reservation', template = "seaborn", text=result_by_room['Nombre reservation'])
   fig3.update_layout(yaxis_title="Nombre de biens réservés", xaxis_title = "Nombre de chambres", title="Nombre des biens réservés sur cette période")
-  fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
+  fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig3,use_container_width=True)
 
 with col2_reservation:
@@ -227,14 +226,14 @@ with col2_reservation:
   #fig = px.bar(reservation_rooms, x="Number Room", y='Total jours réservés', template = "seaborn")
   fig = px.bar(result_by_room, x="Number Room", y='Total jours réservés', template = "seaborn", text=result_by_room['Total jours réservés'])
   fig.update_layout(yaxis_title="Nombre de jours réservés", xaxis_title = "Nombre de chambres", title="Nombre des jours réservés sur cette période")
-  fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
+  fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 
 with col3_reservation:
   #st.subheader("Moyenne de jours réservés par reservation")
   fig = px.bar(result_by_room, x="Number Room", y='Moyenne jours réservés par reservation', text=result_by_room['Moyenne jours réservés par reservation'])
   fig.update_layout(yaxis_title="Moyenne de jours réservés", xaxis_title = "Nombre de chambres", title="Moyenne de jours réservés par reservation")
-  fig.update_traces(marker_color='orange', textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
+  fig.update_traces(textangle=0,textposition="inside",textfont_size=12, textfont_color="white")
   st.plotly_chart(fig,use_container_width=True)
 
 # Filtrer les lignes avec des valeurs non nulles dans les colonnes pertinentes
