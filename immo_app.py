@@ -8,6 +8,7 @@ import base64
 import warnings
 warnings.filterwarnings('ignore')
 from PIL import Image
+import plotly.graph_objects as go
 
 pd.set_option('display.max_row',111)
 pd.set_option('display.max_column',111)
