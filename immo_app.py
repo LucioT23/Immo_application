@@ -29,8 +29,8 @@ pg_by_img = """
                     background-position: 20px 20px;
                 }}
             </style>
+            """
 
-<div data-testid=
 st.markdown(pg_by_img,unsafe_allow_html=True)
 st.title(' :house: Spotivest')
 # Pour remonter le titre dans la page
