@@ -15,24 +15,22 @@ pd.set_option('display.max_column',111)
 image = Image.open('Logo_spotivest.png')
 
 # pour nommer la page
-st.set_page_config(page_title="Spotivest !!!", page_icon=image,layout="wide") # page_icon=":house:"
+st.set_page_config(page_title="Spotivest !!!",page_icon=":house:" ,layout="wide") #  page_icon=image
 
 
 #st.image(image)
-st.markdown(
-        f"""
+
+pg_by_img = """
             <style>
-                [data-testid="stSidebar"] {{
+                [data-testid="stMarkdownContainer"] {{
                     background-image: image;
                     background-repeat: no-repeat;
                     padding-top: 80px;
                     background-position: 20px 20px;
                 }}
             </style>
-            """,
-        unsafe_allow_html=True,
-    )
-
+            """
+st.markdown(pg_by_img,unsafe_allow_html=True)
 st.title(' :house: Spotivest')
 # Pour remonter le titre dans la page
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
