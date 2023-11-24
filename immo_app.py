@@ -22,14 +22,15 @@ st.set_page_config(page_title="Spotivest !!!",page_icon=":house:" ,layout="wide"
 
 pg_by_img = """
             <style>
-                [data-testid="stMarkdownContainer"] {{
+                [data-testid="stSidebarUserContent"] {{
                     background-image: image;
                     background-repeat: no-repeat;
                     padding-top: 80px;
                     background-position: 20px 20px;
                 }}
             </style>
-            """
+
+<div data-testid=
 st.markdown(pg_by_img,unsafe_allow_html=True)
 st.title(' :house: Spotivest')
 # Pour remonter le titre dans la page
