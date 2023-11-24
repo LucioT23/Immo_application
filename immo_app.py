@@ -12,10 +12,12 @@ from PIL import Image
 pd.set_option('display.max_row',111)
 pd.set_option('display.max_column',111)
 
-# pour nommer la page
-st.set_page_config(page_title="Spotivest !!!", page_icon=":house:",layout="wide")
-
 image = Image.open('Logo_spotivest.png')
+
+# pour nommer la page
+st.set_page_config(page_title="Spotivest !!!", page_icon=image,layout="wide") # page_icon=":house:"
+
+
 #st.image(image)
 st.markdown(
         f"""
